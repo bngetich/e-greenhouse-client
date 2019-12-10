@@ -8,6 +8,7 @@ import { OktaAuthService } from '@okta/okta-angular';
 })
 export class HomeComponent implements OnInit {
   isAuthenticated: boolean;
+  title = 'E-Greenhouse';
 
   constructor(public oktaAuth: OktaAuthService) {
   }
