@@ -1,4 +1,4 @@
-export class Feed {
+export interface Feed {
   id: string;
   created_at: Date;
   field1: number;

@@ -1,0 +1,20 @@
+h2 {
+  text-align: center;
+  margin: 25px auto;
+}
+
+.column-layout {
+  display: flex;
+}
+
+.main-column {
+  flex: 3;
+}
+
+.side-bar {
+  flex: 1;
+}
+
+mat-card {
+  margin: 30px auto;
+}

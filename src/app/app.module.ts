@@ -10,6 +10,7 @@ import { MatToolbarModule,
   MatCardModule,
   MatSidenavModule,
   MatListModule,
+  MatDividerModule
   } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -44,7 +45,8 @@ import { LineChartComponent } from './dashboard/sensor-chart/line-chart/line-cha
     MatSidenavModule,
     MatListModule,
     LayoutModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatDividerModule
   ],
   providers: [FeedService],
  bootstrap: [AppComponent]

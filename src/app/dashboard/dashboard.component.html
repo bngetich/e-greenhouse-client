@@ -1,1 +1,14 @@
-<p>dashboard works!</p>
+<h2>Humidity, Temperature and Soil Moisture Monitor</h2>
+
+<div class="container">
+  <mat-card *ngFor="let sensorType of sensorTypes">
+    <div class="column-layout">
+      <div class="main-column">
+        <app-line-chart [feeds] = "feeds" [sensorType] = "sensorType" ></app-line-chart>
+      </div>
+      <mat-divider [vertical]="true"></mat-divider>
+      <div class="side-bar">
+      </div>
+    </div>
+  </mat-card>
+</div>

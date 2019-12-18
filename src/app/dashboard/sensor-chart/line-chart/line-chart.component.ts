@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Feed } from 'src/app/resources/models/Feed';
 
 @Component({
   selector: 'app-line-chart',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./line-chart.component.css']
 })
 export class LineChartComponent implements OnInit {
-  multi: any[];
+  data: Array<number> ;
+  @Input() feeds: any[];
+  @Input() sensorType: string;
   view: any[] = [700, 300];
 
   // options
@@ -17,20 +20,25 @@ export class LineChartComponent implements OnInit {
   yAxis = true;
   showYAxisLabel = true;
   showXAxisLabel = true;
-  xAxisLabel = 'Year';
-  yAxisLabel = 'Population';
+  xAxisLabel = 'Time';
+  yAxisLabel = '';
   timeline = true;
 
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
-
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit() {
+    console.log('sensor type::', this.sensorType);
+    if (this.sensorType === 'Temperature') {
+      this.data = this.feeds.map(x => x.field1);
+      console.log(this.data);
+    } else if (this.sensorType === 'Humidity') {
+      this.data = this.feeds.map(x => x.field2);
+    } else if (this.sensorType === 'Soil Moisture') {
+      this.data = this.feeds.map(x => x.field3);
+    }
+    console.log('feeds;;', this.feeds);
 
+    this.yAxisLabel = this.sensorType;
   }
 
   onSelect(data): void {
@@ -45,4 +53,3 @@ export class LineChartComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }
-
