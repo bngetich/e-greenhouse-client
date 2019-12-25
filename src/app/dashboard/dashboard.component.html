@@ -4,10 +4,11 @@
   <mat-card *ngFor="let sensorType of sensorTypes">
     <div class="column-layout">
       <div class="main-column">
-        <app-line-chart [feeds] = "feeds" [sensorType] = "sensorType" ></app-line-chart>
+        <app-line-chart [sensorType] = "sensorType" ></app-line-chart>
       </div>
       <mat-divider [vertical]="true"></mat-divider>
       <div class="side-bar">
+        <app-gauge-chart [sensorType] = "sensorType"></app-gauge-chart>
       </div>
     </div>
   </mat-card>

@@ -1,1 +1,13 @@
-<p>gauge-chart works!</p>
+<ngx-charts-gauge
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="data"
+  [legend]="legend"
+  [legendPosition]="legendPosition"
+  [min]="0"
+  [max]="100"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  >
+</ngx-charts-gauge>

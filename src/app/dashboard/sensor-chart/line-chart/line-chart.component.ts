@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Feed } from 'src/app/resources/models/Feed';
+import { FeedService } from 'src/app/resources/feed.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-line-chart',
@@ -7,10 +9,11 @@ import { Feed } from 'src/app/resources/models/Feed';
   styleUrls: ['./line-chart.component.css']
 })
 export class LineChartComponent implements OnInit {
-  data: Array<number> ;
-  @Input() feeds: any[];
   @Input() sensorType: string;
-  view: any[] = [700, 300];
+  feeds: Feed[] = [];
+  data: any = [];
+
+  view: any[] = [700, 400];
 
   // options
   legend = true;
@@ -22,22 +25,49 @@ export class LineChartComponent implements OnInit {
   showXAxisLabel = true;
   xAxisLabel = 'Time';
   yAxisLabel = '';
-  timeline = true;
+  autoScale = true;
+  colorScheme = {
+    domain: ['#3f51b5']
+  };
 
-  constructor() {}
+  constructor(
+    private feedService: FeedService
+  ) {}
 
-  ngOnInit() {
-    console.log('sensor type::', this.sensorType);
-    if (this.sensorType === 'Temperature') {
-      this.data = this.feeds.map(x => x.field1);
-      console.log(this.data);
-    } else if (this.sensorType === 'Humidity') {
-      this.data = this.feeds.map(x => x.field2);
-    } else if (this.sensorType === 'Soil Moisture') {
-      this.data = this.feeds.map(x => x.field3);
-    }
-    console.log('feeds;;', this.feeds);
-
+  async ngOnInit() {
+    this.data = [
+      {
+        name: this.sensorType,
+        series: []
+      }
+    ];
+    this.feedService.observeMessagesSubject.subscribe(feedString => {
+      const jsonObj = JSON.parse(feedString); // string to generic object first
+      const feed: Feed = jsonObj as Feed;
+      this.feeds.push(feed);
+      this.feeds.map(x => {
+        if (this.sensorType === 'Temperature') {
+          this.data[0].series.push({
+            name: moment(x.created_at).format('hh:mm'),
+            value: x.field1
+          });
+          this.data = [...this.data];
+        } else if (this.sensorType === 'Humidity') {
+          this.data[0].series.push({
+            name: moment(x.created_at).format('hh:mm'),
+            value: x.field2
+          });
+          this.data = [...this.data];
+        } else if (this.sensorType === 'Soil Moisture') {
+          this.data[0].series.push({
+            name: moment(x.created_at).format('hh:mm'),
+            value: x.field3
+          });
+          this.data = [...this.data];
+        }
+      });
+    });
+    // console.log('data::', this.data);
     this.yAxisLabel = this.sensorType;
   }
 
